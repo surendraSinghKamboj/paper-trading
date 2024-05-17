@@ -91,3 +91,14 @@ export const loginAction = async (data) => {
     return JSON.stringify(state);
   }
 };
+
+export const logout = async (data) => {
+  cookies().set({
+    name: "token",
+    value: null,
+    httpOnly: true,
+    path: "/",
+  });
+
+  redirect("/?user=login");
+};

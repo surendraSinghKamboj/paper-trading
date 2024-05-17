@@ -181,3 +181,27 @@ export const exitOrder = async (data) => {
     });
   }
 };
+
+export const getAllClosedOrders = async () => {
+  const auth = cookies().get("token")?.value;
+  if (!auth) {
+    redirect("/");
+  }
+  const verify = await verifyToken(auth);
+  if (!verify.valid) {
+    redirect("/");
+  }
+  try {
+    const orders = await Order.find({
+      userId: verify.decoded._id,
+    }).sort({ createdAt: -1 });
+
+    if (!orders) {
+      return JSON.stringify({ status: false, message: "Orders Not Found" });
+    }
+    return JSON.stringify({ status: true, orders });
+  } catch (error) {
+    console.log(error);
+    return JSON.stringify({ status: false, message: "Internal Server error." });
+  }
+};
