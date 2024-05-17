@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import icon from "@/assets/icon.png";
 import Link from "next/link";
 import { register } from "@/actions/user";
+import { ImSpinner10 } from "react-icons/im";
 
 const UserRegistration = () => {
   const [loader, setLoader] = useState(false);
@@ -101,7 +102,7 @@ const UserRegistration = () => {
           >
             {" "}
             {loader ? (
-              <div className="w-6 h-6 border-l-2 border-t-2 border-b-2 border-white mx-auto animate-spin rounded-full"></div>
+               <ImSpinner10 className="mx-auto text-white animate-spin" />
             ) : (
               "Register"
             )}

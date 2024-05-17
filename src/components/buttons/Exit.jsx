@@ -1,28 +1,32 @@
 "use client";
 import { exitOrder } from "@/actions/order";
 import React, { useEffect, useState } from "react";
+import { ImSpinner10 } from "react-icons/im";
 
 const Exit = ({ order }) => {
   const [show, setShow] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState({ status: false, message: "" });
   const [value, setValue] = useState(0);
+  const [enable, setEnable] = useState(false);
 
   const handleSubmit = async () => {
     try {
+      setEnable(true);
       const data = await exitOrder({
         orderId: order._id,
         orderType: order.orderType,
         exitPrice: value, // Use value instead of exitPrice
       });
       const res = JSON.parse(data);
-
+      setEnable(false);
       if (res.status) {
         setShow(false);
         setShowMessage(true);
         setMessage(res);
       }
     } catch (error) {
+      setEnable(false);
       console.log(error);
       setShowMessage(true);
       setMessage({
@@ -63,10 +67,11 @@ const Exit = ({ order }) => {
             className="w-full px-4 py-2 mt-2 border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
           />
           <button
+            disabled={enable ? true : false}
             onClick={handleSubmit}
-            className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg transition duration-300 mt-2"
+            className="w-full bg-red-500 disabled:bg-gray-500 hover:bg-red-600 text-white py-2 rounded-lg transition duration-300 mt-2"
           >
-            Exit
+            {enable ? <ImSpinner10 className="mx-auto animate-spin" /> : "Exit"}
           </button>
           <button
             onClick={() => setShow(false)}

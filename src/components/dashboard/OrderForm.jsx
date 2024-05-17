@@ -1,10 +1,12 @@
 import { createOrder } from "@/actions/order";
 import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { ImSpinner10 } from "react-icons/im";
 
 const OrderForm = ({ hide }) => {
   const [message, setMessage] = useState({ status: false, message: "" });
   const [showMessage, setShowMessage] = useState(false);
+  const [enable, setEnable] = useState(false);
   const [formData, setFormData] = useState({
     instrument: "",
     orderType: "BUY",
@@ -25,13 +27,19 @@ const OrderForm = ({ hide }) => {
   };
 
   const handleSubmit = async (e) => {
+    setEnable(true);
     e.preventDefault();
     try {
       const res = await createOrder(formData);
       const data = JSON.parse(res);
+      setEnable(false);
       setMessage(data);
+      if (data.status) {
+        hide(false);
+      }
       setShowMessage(true);
     } catch (error) {
+      setEnable(false);
       console.log(error);
     }
   };
@@ -42,7 +50,6 @@ const OrderForm = ({ hide }) => {
         setShowMessage(false);
       } else {
         setShowMessage(false);
-        hide(false);
       }
     }, 3000);
   }, [showMessage]);
@@ -209,6 +216,7 @@ const OrderForm = ({ hide }) => {
           />
         </div>
         <button
+          disabled={enable ? true : false}
           type="submit"
           className={`w-full ${
             formData.orderType === "BUY"
@@ -216,7 +224,11 @@ const OrderForm = ({ hide }) => {
               : "bg-red-500  hover:bg-red-600"
           } text-white py-2 rounded-lg transition duration-300`}
         >
-          Place Order
+          {enable ? (
+            <ImSpinner10 className="mx-auto animate-spin" />
+          ) : (
+            "Place Order"
+          )}
         </button>
       </form>
 

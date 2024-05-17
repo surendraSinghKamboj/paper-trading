@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import icon from "@/assets/icon.png";
 import Link from "next/link";
 import { loginAction } from "@/actions/user";
+import { ImSpinner10 } from "react-icons/im";
 
 const Login = () => {
   const [loader, setLoader] = useState(false);
@@ -25,7 +26,7 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoader(true);
-      const res = await loginAction( formData );
+      const res = await loginAction(formData);
       setLoader(false);
       const data = JSON.parse(res);
       if (data.status) {
@@ -84,7 +85,7 @@ const Login = () => {
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
           >
             {loader ? (
-              <div className="w-6 h-6 border-l-2 border-t-2 border-b-2 border-white mx-auto animate-spin rounded-full"></div>
+              <ImSpinner10 className="mx-auto text-white animate-spin" />
             ) : (
               "Login"
             )}
