@@ -1,4 +1,5 @@
 import { getFunds } from "@/actions/funds";
+import { formatINR } from "@/libs/formateINR";
 import React from "react";
 
 const page = async () => {
@@ -23,11 +24,11 @@ const page = async () => {
             <h3 className="text-lg font-medium text-gray-700">
               Fund Information
             </h3>
-            <p className="text-gray-600">
-              Current Fund: ₹ {fund.currentFund.toFixed(2)}
+            <p className="font-mono font-extrabold text-green-600">
+              Current Fund:  {formatINR(fund.currentFund)}
             </p>
-            <p className="text-gray-600">
-              Invested Fund: ₹ {fund.investedFund.toFixed(2)}
+            <p className="text-red-600 font-mono font-extrabold">
+              Invested Fund:  {formatINR(fund.investedFund)}
             </p>
           </div>
         </div>
