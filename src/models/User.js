@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Fund",
     },
+    pnlId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Pnl",
+    },
   },
   { timestamps: true }
 );

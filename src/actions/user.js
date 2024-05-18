@@ -6,6 +6,7 @@ import { generateToken } from "@/libs/token-generator";
 import { connectToDatabase } from "@/database/db";
 import Fund from "@/models/Fund";
 import User from "@/models/User";
+import Pnl from "@/models/Pnl";
 
 export const register = async (data) => {
   let token;
@@ -30,7 +31,11 @@ export const register = async (data) => {
         state = { status: false, message: "User couldn't Created." };
       } else {
         const fund = await Fund.create({ userId: user._id });
-        await User.findByIdAndUpdate(user._id, { fundId: fund._id });
+        const pnl = await Pnl.create({ userId: user._id });
+        await User.findByIdAndUpdate(user._id, {
+          fundId: fund._id,
+          pnlId: pnl._id,
+        });
         token = generateToken({ _id: user._id });
         state = { status: true, message: "User Created Successfully." };
       }
@@ -68,6 +73,10 @@ export const loginAction = async (data) => {
       if (user.password !== generateSHA512(password)) {
         state = { status: false, message: "Username or Password Incorrect." };
       } else {
+        if (!user.pnlId) {
+          const pnl = await Pnl.create({ userId: user._id });
+          await User.findByIdAndUpdate(user._id, { pnlId: pnl._id });
+        }
         token = generateToken({ _id: user._id });
         state = { status: true, message: "User Created Successfully." };
       }
