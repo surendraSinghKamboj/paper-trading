@@ -6,7 +6,7 @@ const page = async () => {
   const data = await getAllClosedOrders();
   const res = JSON.parse(data);
   return (
-    <div>
+    <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200 shadow-lg rounded-lg overflow-hidden">
         <thead className="bg-gray-50">
           <tr className="font-mono">
@@ -39,7 +39,7 @@ const page = async () => {
         <tbody className="bg-white divide-y divide-gray-200 pb-16">
           {res.orders &&
             res.orders.map((item) => (
-              <tr key={item._id}>
+              <tr key={item._id} className={`${item.orderStatus==="OPEN"?"bg-blue-300":"bg-red-200"}`}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {item.instrument}
                 </td>

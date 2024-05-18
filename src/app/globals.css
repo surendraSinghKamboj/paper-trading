@@ -2,3 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@media (max-width: 640px) {
+    th, td {
+      padding: 4px;
+      font-size: 12px;
+    }
+  }
+  @media (max-width: 768px) {
+    th, td {
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+  

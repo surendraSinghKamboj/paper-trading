@@ -23,7 +23,8 @@ const page = async () => {
         <div>{formatINR(fund.currentFund)}</div>
       </div>
       <CreateOrder />
-      <div className="pb-80">
+
+      <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200 shadow-lg rounded-lg overflow-hidden">
           <thead className="bg-gray-50">
             <tr>
