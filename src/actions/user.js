@@ -156,5 +156,6 @@ export const authToken = async (code) => {
     return JSON.stringify({ status: false });
   }
   process.env.ACCESS_TOKEN = access_token;
+  console.log(access_token);
   redirect("/dashboard");
 };
